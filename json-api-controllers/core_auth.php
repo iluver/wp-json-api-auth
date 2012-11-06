@@ -329,10 +329,6 @@ class JSON_API_Core_Auth_Controller {
   public function get_nonce() {
     global $json_api;
 
-   if (! $this->confirm_auth() ) {
-   	return false;
-   }
-
     extract($json_api->query->get(array('controller', 'method')));
     if ($controller && $method) {
       $controller = strtolower($controller);
