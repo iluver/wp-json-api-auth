@@ -1,12 +1,12 @@
 <?php
 /*
-Controller Name: Posts
+Controller Name: Posts_Auth
 Controller Description: Data manipulation methods for posts with Authentication method added
 Controller Author: Matt Berg
 Controller Author Twitter: @mattberg
 */
 
-class JSON_API_Posts_Controller {
+class JSON_API_Posts_Auth_Controller {
 
 	public function create_post() {
 
