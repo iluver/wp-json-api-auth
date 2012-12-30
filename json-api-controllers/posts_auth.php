@@ -20,7 +20,7 @@ class JSON_API_Posts_Auth_Controller {
 			$json_api->error("You must include a 'cookie' authentication cookie. Use the `create_auth_cookie` Auth API method.");
 		}
 
-		$nonce_id = $json_api->get_nonce_id('posts', 'create_post');
+		$nonce_id = $json_api->get_nonce_id('posts_auth', 'create_post');
 		if (!wp_verify_nonce($json_api->query->nonce, $nonce_id)) {
 			$json_api->error("Your 'nonce' value was incorrect. Use the 'get_nonce' API method.");
 		}
