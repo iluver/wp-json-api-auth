@@ -16,12 +16,12 @@ like (B) below, rather than (A) below.)
 Ok, all this nonce-nonsense it very confusing. So, here's the basic logic of how to call the API:
 
 (A) To get some data:
-1. get a nonce TO GET A COOKIE, i.e. with controller = core_auth, method = generate_auth_cookie
+1. get a nonce TO GET A COOKIE, i.e. with controller = auth, method = generate_auth_cookie
 2. get an authentication cookie using the nonce
 3. request your data using the cookie.
 
 For greater security, creating a post requires a nonce, so it works like this:
-1. get a nonce TO GET A COOKIE, i.e. with controller = core_auth, method = generate_auth_cookie
+1. get a nonce TO GET A COOKIE, i.e. with controller = auth, method = generate_auth_cookie
 2. get an authentication cookie using the nonce
 3. get a nonce TO CREATE A POST, with controller = posts_auth, method=create_post
 4. create the post using the nonce + cookie + params for the post
