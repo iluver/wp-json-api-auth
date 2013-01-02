@@ -17,7 +17,6 @@ Ok, all this nonce-nonsense it very confusing. So, here's the basic logic of how
 
 (A) To get some data:
 1. get a nonce TO GET A COOKIE, i.e. with controller = auth, method = generate_auth_cookie
-2. 
 2. get an authentication cookie using the nonce
 3. request your data using the cookie.
 
