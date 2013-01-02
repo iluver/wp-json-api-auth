@@ -29,6 +29,10 @@ For greater security, creating a post requires a nonce, so it works like this:
 Of course, each step is another call-back function, right, since it can't start until the previous step succeeds.
 
 
+EXAMPLES:
+See the "examples" folder for Alex Baker's javascript example. Do NOT use this example as is, because you will be exposing a real username and password for the world to see! (Thank you, Alex).
+
+
 
 WORDPRESS INSTALLATION:
 
