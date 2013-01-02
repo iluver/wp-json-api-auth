@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Create Post Nonce Test</title>
+<meta name="description" content="Demonstration of auth access to a WordPress website.">
+<meta name="keywords" content="WordPress, auth, JavaScript">
+<meta name="author" content="Alex Baker">
+
+<style>
+* { font-family: Verdana, Geneva, sans-serif; line-height: 30px }
+.title { background:#333; color: white; }
+.success { color: #060; font-weight: bold; }
+</style>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script>
+/*
+USER SETTINGS HERE:
+1) Replace the sample URL in "apiURL", below, with the URL of your WordPress website.
+2) Replace the "username" and "password" values with real login values for your WordPress website.
+
+WARNING: Do NOT use this script, with username and password values, in a real website, or everyone will be able to read those values!!!
+
+*/
+
+var apiURL = "http://www.mywebsite.com/api/";
+var username = "test", password = "test";
+
+var noncestring = "core_auth/get_nonce/?";
+var authstring = "auth/generate_auth_cookie/?";
+var poststring = "posts_auth/create_post/?";
+var nonce, cookie;
+
+alert ("Set the values of apiURL, username, and password in the Javascript. \nWARNING: Do NOT use this script, with username and password values, in a real website, or everyone will be able to read those values!!!");
+
+
+$(document).ready(function(){
+	
+	getNonce("auth", "generate_auth_cookie");
+	
+	function getNonce(controller, method) {	
+		$.getJSON(apiURL + noncestring + "controller=" + controller + "&method=" + method, function(data) {
+		
+			var items = [];
+			$.each(data, function(key, val) {
+				if (key == "nonce") {
+					nonce = val;
+					$('.status').append("<br>Nonce acquired for controller '" + controller + "', method '" + method + "': " + val);
+						
+					// Add additional methods here. Could make this a switch statement. 
+					if (method == "generate_auth_cookie") 
+						createAuthCookie();
+					
+					if (method == "create_post")
+						createPost();
+						
+				}
+			});
+		});
+	}
+	
+	
+	function createAuthCookie() {
+		
+		$('.status').append("<br>creating auth cookie with nonce " + nonce);
+					
+		var authCookieURL = apiURL + authstring + "nonce=" + nonce + "&username=" + username + "&password=" + password;
+		
+		$.getJSON(authCookieURL, function(data) {
+			var items = [];
+			$.each(data, function(key, val) {
+				
+				if (key == "cookie") {
+					cookie = val;
+					$('.status').append("<br>Auth cookie acquired! value: " + val);
+					
+					// Get a new nonce to create the post:
+					getNonce("posts_auth", "create_post");
+					
+				}
+			});			
+		});
+	}
+	
+	function createPost() {
+		$('.status').append("<br>creating post with nonce: " + nonce);
+		
+		var cookiepart = "&cookie=" + cookie;
+		var postContent = "&status=publish&title=NonceTest&content=test+test&author=Alex&categories=Demos&tags=test,api,json";
+		
+		$.getJSON(apiURL + poststring + "nonce=" + nonce + cookiepart + postContent, function(data) {
+			var items = [];
+			$.each(data, function(key, val) {
+				if (key == "status") {
+					console.log("status value: " + val);
+					if (val == "ok") {
+						$('.status').append("<br><span class='success'>A new post was successfully created.</span>");
+					}
+				}
+			});
+		
+			
+		});
+	}
+	
+
+});
+
+</script>
+
+</head>
+
+<body>
+<div id="wrapper">
+<div class="title">Create Post Status</div>
+<div class="status">Getting nonce for auth cookie...</div>
+</div>
+
+</body>
+</html>
