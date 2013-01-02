@@ -8,9 +8,9 @@ I have modified Matt Berg's work a little, so that all wordpress data requires a
 - Moved controllers to their own directory as the json-api suggests.
 - Created a version of the core controller in which each function checks that a cookie has been created.
 
-HOW TO USE (very rough and incomplete --- ask if you want me to write something more):
-(Please note, I've commented OUT the nonce-check for core functions, e.g. info() or get_recent_posts(). 
-The auth checker is in core_auth.php. It might be that this is a bad, insecure idea. If so, than all requests will look
+###HOW TO USE 
+(Contrary to what I've said below, I've commented OUT the nonce-check for core functions, e.g. info() or get_recent_posts(). I figured that it was overkill to protect such data, but if you want to prevent everyone having unlimited access -- perhaps some posts are private! -- you should uncomment the nonce-check code.
+Note, the auth checker function is in core_auth.php. It might be that this is a bad, insecure idea. If so, than all requests will look
 like (B) below, rather than (A) below.)
 
 Ok, all this nonce-nonsense it very confusing. So, here's the basic logic of how to call the API:
@@ -29,13 +29,13 @@ For greater security, creating a post requires a nonce, so it works like this:
 Of course, each step is another call-back function, right, since it can't start until the previous step succeeds.
 
 
-EXAMPLES:
+###EXAMPLES:
 
 See the "examples" folder for Alex Baker's javascript example. Do NOT use this example as is, because you will be exposing a real username and password for the world to see! (Thank you, Alex).
 
 
 
-WORDPRESS INSTALLATION:
+###WORDPRESS INSTALLATION:
 
 JSON-API:
 Install the standard json-api.
